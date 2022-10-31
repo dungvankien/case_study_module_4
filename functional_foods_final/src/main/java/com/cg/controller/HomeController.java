@@ -3,6 +3,7 @@ package com.cg.controller;
 
 import com.cg.model.Product;
 import com.cg.service.product.IProductService;
+import com.cg.util.AppUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,18 +17,15 @@ import java.util.List;
 public class HomeController {
 
     @Autowired
-    private IProductService productService;
+    private AppUtil appUtil;
 
     @GetMapping
     public ModelAndView showHomePage() {
-//        ModelAndView modelAndView = new ModelAndView();
-//        modelAndView.setViewName("index");
-//
-//        return modelAndView;
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("index");
+        String username = appUtil.getPrincipalUsername();
+        modelAndView.addObject("username", username);
 
-        ModelAndView modelAndView = new ModelAndView("index");
-        List<Product> products = productService.findAll();
-        modelAndView.addObject("products", products);
         return modelAndView;
     }
 
